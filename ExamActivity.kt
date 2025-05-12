@@ -104,7 +104,7 @@ class ExamActivity : AppCompatActivity(), OnQuestionClickListener { // Implement
 
         // 根据出题顺序设置对题目列表进行处理
         if (questionOrder == "random") {
-            questionList.shuffle()
+            reorderQuestionsRandomly()
         }
 
         userAnswers.clear()
@@ -191,6 +191,32 @@ class ExamActivity : AppCompatActivity(), OnQuestionClickListener { // Implement
         }
         Log.d("ExamActivity", "Loaded ${questionList.size} questions for '$specificMajor' from database")
         db.close()
+    }
+
+    private fun reorderQuestionsRandomly() {
+        val singleChoiceQuestions = mutableListOf<Question>()
+        val multiChoiceQuestions = mutableListOf<Question>()
+        val judgmentQuestions = mutableListOf<Question>()
+
+        // 分离不同类型的题目
+        for (question in questionList) {
+            when (question.questionType) {
+                QuestionType.SINGLE_CHOICE -> singleChoiceQuestions.add(question)
+                QuestionType.MULTI_CHOICE -> multiChoiceQuestions.add(question)
+                QuestionType.JUDGMENT -> judgmentQuestions.add(question)
+            }
+        }
+
+        // 对不同类型的题目进行随机排序
+        singleChoiceQuestions.shuffle()
+        multiChoiceQuestions.shuffle()
+        judgmentQuestions.shuffle()
+
+        // 合并排序后的题目
+        questionList.clear()
+        questionList.addAll(singleChoiceQuestions)
+        questionList.addAll(multiChoiceQuestions)
+        questionList.addAll(judgmentQuestions)
     }
 
     private fun showQuestion(index: Int) {
