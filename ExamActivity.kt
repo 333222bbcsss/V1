@@ -24,10 +24,6 @@ import java.util.*
 // OnQuestionClickListener interface should be defined if QuestionCardAdapter uses it.
 // Assuming it's defined in QuestionCardAdapter.kt or another shared file.
 // interface OnQuestionClickListener { fun onQuestionClick(index: Int) }
-
-// OnQuestionClickListener interface should be defined if QuestionCardAdapter uses it.
-// Assuming it's defined in QuestionCardAdapter.kt or another shared file.
-// interface OnQuestionClickListener { fun onQuestionClick(index: Int) }
 class ExamActivity : AppCompatActivity(), OnQuestionClickListener { // Implement if needed by adapter
     private val minTextSizeMultiplier = 0.8f
     private val maxTextSizeMultiplier = 1.5f
